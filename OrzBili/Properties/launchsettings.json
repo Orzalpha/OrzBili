@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "OrzBili (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "OrzBili (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}

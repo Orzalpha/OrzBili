@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="OrzBili.Views.TestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:OrzBili.ViewModels"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea">
+        <Grid.DataContext>
+            <viewmodels:TestViewModel x:Name="VM" />
+        </Grid.DataContext>
+        <StackPanel>
+            <Button x:Name="TestButton"
+                    Content="Click Me"
+                Command="{x:Bind VM.ButtonCommand}" />
+            <TextBlock Text="{x:Bind VM.TestContent, Mode=OneWay}" />
+        </StackPanel>
+        
+    </Grid>
+</Page>
