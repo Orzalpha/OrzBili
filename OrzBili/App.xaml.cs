@@ -11,6 +11,7 @@ using OrzBili.Models;
 using OrzBili.Services;
 using OrzBili.ViewModels;
 using OrzBili.Views;
+
 using Windows.UI.WebUI;
 
 namespace OrzBili;
@@ -56,19 +57,23 @@ public partial class App : Application
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibli.com/");
             });
             services.AddSingleton<IGetStreamService, GetStreamService>();
-            services.AddHttpClient<UniversalNetService>(client =>
+            services.AddHttpClient<BiliApiService>(client =>
             {
                 client.BaseAddress = new Uri("https://api.bilibili.com/");
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com/");
             });
-            services.AddSingleton<IGetpgcService, GetpgcService>();
+            services.AddSingleton<IBiliApiService, BiliApiService>();
+            //services.AddSingleton<IGetpgcService, GetpgcService>();
 
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
+
             // Other Activation Handlers
+            
 
             // Services
+            services.AddTransient<IWebViewService, WebViewService>();
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
@@ -81,6 +86,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<LoginPage>();
             services.AddTransient<TestViewModel>();
             services.AddTransient<TestPage>();
             services.AddTransient<SettingsViewModel>();
