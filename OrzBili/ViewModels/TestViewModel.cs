@@ -1,23 +1,38 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OrzBili.Contracts.Services;
+using OrzBili.Contracts.ViewModels;
+using OrzBili.Core.Contracts.Services;
 using Windows.Storage;
 
 namespace OrzBili.ViewModels;
 
-public partial class TestViewModel : ObservableRecipient
+public partial class TestViewModel : ObservableRecipient, INavigationAware
 {
     //private readonly IGetpgcService _getpgcService;
 
     [ObservableProperty]
     public string? testContent;
 
-    public TestViewModel()
+    private readonly INavigationService _navigationService;
+    private readonly IFileService _fileService;
+
+    public TestViewModel()  
     {
+        _navigationService = App.GetService<INavigationService>();
+        _fileService = App.GetService<IFileService>();
         //_getpgcService = App.GetService<IGetpgcService>();
+        
     }
 
-    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    public void OnNavigatedTo(object parameter)
+    {
+    
+    }
+
+    public void OnNavigatedFrom() { }
+
+    [RelayCommand]
     public async void Button()
     {
         //var result = await _getpgcService.Testtask();
@@ -26,8 +41,10 @@ public partial class TestViewModel : ObservableRecipient
         //{
         //    TestContent += res.ToString() + '\n';
         //}
-        //return;
+
+        _navigationService.NavigateTo(typeof(UserViewModel).FullName!);
+        await Task.CompletedTask;
     }
-   
+
 }
     

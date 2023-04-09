@@ -11,13 +11,7 @@
         <StackPanel>
 
             <Button x:Name="TestButton"
-                Content="Test"
-                Click="TestButton_Click" >
-                <Button.Flyout>
-                    <Flyout>
-                        
-                    </Flyout>
-                </Button.Flyout>
+                Content="Test">
             </Button>
             <TextBlock x:Name="TestTextBlock" />
         </StackPanel>

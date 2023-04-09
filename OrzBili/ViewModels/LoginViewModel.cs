@@ -14,7 +14,7 @@ namespace OrzBili.ViewModels;
 // https://docs.microsoft.com/microsoft-edge/webview2/get-started/winui
 // https://docs.microsoft.com/microsoft-edge/webview2/concepts/developer-guide
 // https://docs.microsoft.com/microsoft-edge/webview2/concepts/distribution
-public class LoginViewModel : ObservableRecipient, INavigationAware
+public partial class LoginViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
     private Uri _source = new("https://passport.bilibili.com/ajax/miniLogin/minilogin");
@@ -67,6 +67,12 @@ public class LoginViewModel : ObservableRecipient, INavigationAware
     public ICommand OpenInBrowserCommand
     {
         get;
+    }
+
+    [RelayCommand]
+    public void LoginOK()
+    {
+        
     }
 
     public LoginViewModel(IWebViewService webViewService)
