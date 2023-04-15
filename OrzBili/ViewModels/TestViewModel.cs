@@ -36,15 +36,7 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
     [RelayCommand]
     public async void Button()
     {
-        //var result = await _getpgcService.Testtask();
-        //TestContent = string.Empty;
-        //foreach (var res in result)
-        //{
-        //    TestContent += res.ToString() + '\n';
-        //}
-
-        var account = await _biliApiService.GetAccountInfoAsync();
-        TestContent = account.ToString();
+        
         await Task.CompletedTask;
     }
 

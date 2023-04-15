@@ -1,12 +1,16 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.Web.WebView2.Core;
-
+using OrzBili.Contracts.Records;
 using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
+using OrzBili.Core.Contracts.Services;
+using OrzBili.Models;
+using Windows.Storage;
 
 namespace OrzBili.ViewModels;
 
@@ -75,9 +79,28 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
         try
         {
             var cookie = await WebViewService.GetBiliCookieAsync("https://www.bilibili.com/");
-            _biliapiService.SetCookie(cookie);
-            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account);
             
+            _biliapiService.SetCookie(cookie);
+            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account) as AccountModel.Rootobject;
+            if (account!.code == 0)
+            {
+                var mid = account.data!.mid;
+                if (mid == null)
+                {
+                    return;
+                }
+                lock (_biliGlobalRecord)
+                {
+                    _biliGlobalRecord.Mid = mid;
+                }
+                var storageInfo = new UserStorageInfoModel((long)mid, cookie);
+                _fileService.Save<UserStorageInfoModel>(ApplicationData.Current.LocalFolder.Path, "StoredInfo.json", storageInfo);
+            }
+            else
+            {
+                // to set a flyout
+                return;
+            } 
         }
         catch (Exception ex)
         {
@@ -85,19 +108,26 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
         }
 
         await Task.CompletedTask;
+        return;
     }
 
     private readonly IBiliApiService _biliapiService;
     private readonly INavigationService _navigationService;
+    private readonly IBiliGlobalRecord _biliGlobalRecord;
+    private readonly IFileService _fileService;
 
     public LoginViewModel(
         IWebViewService webViewService, 
         IBiliApiService biliApiService, 
-        INavigationService navigationService)
+        INavigationService navigationService,
+        IBiliGlobalRecord biliGlobalRecord,
+        IFileService fileService)
     {
         WebViewService = webViewService;
         _biliapiService = biliApiService;
         _navigationService = navigationService;
+        _biliGlobalRecord = biliGlobalRecord;
+        _fileService = fileService;
 
         BrowserBackCommand = new RelayCommand(() => WebViewService.GoBack(), () => WebViewService.CanGoBack);
         BrowserForwardCommand = new RelayCommand(() => WebViewService.GoForward(), () => WebViewService.CanGoForward);

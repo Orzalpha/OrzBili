@@ -7,22 +7,10 @@ public record class BangumiListModel
 {
     public class Rootobject
     {
-        public int? code
-        {
-            get; set;
-        }
-        public string? message
-        {
-            get; set;
-        }
-        public int? ttl
-        {
-            get; set;
-        }
-        public Data? data
-        {
-            get; set;
-        }
+        public int? code { get; set; } = null;
+        public string? message { get; set; } = null;
+        public int? ttl { get; set; } = null;
+        public Data? data { get; set; } = null;
     }
 
     public class Data

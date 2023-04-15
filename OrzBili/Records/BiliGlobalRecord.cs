@@ -3,25 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrzBili.Contracts.Records;
 using OrzBili.Models;
 
 namespace OrzBili.Records;
-public class BiliGlobalRecord
+public class BiliGlobalRecord : IBiliGlobalRecord
 {
-    public long? mid
-    {
-        get; set;
-    } = null;
+    public long? Mid { get; set; } = null;
 
-    public string? media_id
-    {
-        get;
-        set;
-    } = null;
-
-    public AccountModel? Account
-    {
-        get; set;
-    }
 
 }

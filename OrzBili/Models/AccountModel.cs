@@ -7,46 +7,26 @@ public record class AccountModel
 {
     public class Rootobject
     {
-        public int? code
-        {
-            get; set;
-        }
-        public string? message
-        {
-            get; set;
-        }
-        public Data? data
-        {
-            get; set;
-        }
+        public int? code { get; set; } = null;
+
+        public string? message { get; set; } = null;
+
+        public Data? data { get; set; } = null;
     }
 
     public class Data
     {
-        public long? mid
-        {
-            get; set;
-        }
-        public string? uname
-        {
-            get; set;
-        }
-        public string? userid
-        {
-            get; set;
-        }
-        public string? sign
-        {
-            get; set;
-        }
-        public string? birthday
-        {
-            get; set;
-        }
-        public string? sex
-        {
-            get; set;
-        }
+        public long? mid { get; set; } = null;
+
+        public string? uname { get; set; } = null;
+
+        public string? userid { get; set; } = null;
+
+        public string? sign { get; set; } = null;
+
+        public string? birthday { get; set; } = null;
+
+        public string? sex { get; set; } = null;
     }
 
 }

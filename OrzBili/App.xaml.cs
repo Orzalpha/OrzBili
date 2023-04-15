@@ -3,11 +3,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
 using OrzBili.Activation;
+using OrzBili.Contracts.Records;
 using OrzBili.Contracts.Services;
 using OrzBili.Core.Contracts.Services;
 using OrzBili.Core.Services;
 using OrzBili.Helpers;
 using OrzBili.Models;
+using OrzBili.Records;
 using OrzBili.Services;
 using OrzBili.ViewModels;
 using OrzBili.Views;
@@ -51,7 +53,10 @@ public partial class App : Application
         UseContentRoot(AppContext.BaseDirectory).
         ConfigureServices((context, services) =>
         {
-            //  Http Client
+            // Records
+            services.AddSingleton<IBiliGlobalRecord, BiliGlobalRecord>();
+
+            // Http Client
             services.AddHttpClient("StreamClient", client =>
             {
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibli.com/");
