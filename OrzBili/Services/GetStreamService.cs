@@ -11,10 +11,10 @@ namespace OrzBili.Services;
 
 public class GetStreamService : IGetStreamService
 {
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public GetStreamService(HttpClient httpClient)
+    public GetStreamService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
     }
 }

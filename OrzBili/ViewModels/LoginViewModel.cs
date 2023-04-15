@@ -70,20 +70,41 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
     }
 
     [RelayCommand]
-    public void LoginOK()
+    public async void LoginOK()
     {
-        
+        try
+        {
+            var cookie = await WebViewService.GetBiliCookieAsync("https://www.bilibili.com/");
+            _biliapiService.SetCookie(cookie);
+            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account);
+            
+        }
+        catch (Exception ex)
+        {
+            //  之后设置一个 Flyout 报错
+        }
+
+        await Task.CompletedTask;
     }
 
-    public LoginViewModel(IWebViewService webViewService)
+    private readonly IBiliApiService _biliapiService;
+    private readonly INavigationService _navigationService;
+
+    public LoginViewModel(
+        IWebViewService webViewService, 
+        IBiliApiService biliApiService, 
+        INavigationService navigationService)
     {
         WebViewService = webViewService;
+        _biliapiService = biliApiService;
+        _navigationService = navigationService;
 
         BrowserBackCommand = new RelayCommand(() => WebViewService.GoBack(), () => WebViewService.CanGoBack);
         BrowserForwardCommand = new RelayCommand(() => WebViewService.GoForward(), () => WebViewService.CanGoForward);
         ReloadCommand = new RelayCommand(() => WebViewService.Reload());
         RetryCommand = new RelayCommand(OnRetry);
         OpenInBrowserCommand = new RelayCommand(async () => await Windows.System.Launcher.LaunchUriAsync(WebViewService.Source), () => WebViewService.Source != null);
+        
     }
 
     public void OnNavigatedTo(object parameter)

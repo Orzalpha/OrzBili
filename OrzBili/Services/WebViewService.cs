@@ -38,6 +38,28 @@ public class WebViewService : IWebViewService
 
     public void Reload() => _webView?.Reload();
 
+    /// <summary>
+    /// 用于获取 cookie，获取不到时会抛出一个异常
+    /// </summary>
+    /// <returns></returns>
+    public async Task<string> GetBiliCookieAsync(string domain)
+    {
+        var cookies = await _webView!.CoreWebView2.CookieManager.GetCookiesAsync(domain);
+        if (cookies == null)
+        {
+            throw new Exception("Can't get cookie!");
+        }
+        else
+        {
+            var result = string.Empty;
+            foreach (var cookie in cookies)
+            {
+                result += cookie.Name + '=' + cookie.Value + ';';
+            }
+            return result;
+        } 
+    }
+
     public void UnregisterEvents()
     {
         if (_webView != null)

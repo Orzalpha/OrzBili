@@ -5,17 +5,13 @@
 /// </summary>
 public record class AccountModel
 {
-    public class RootObject
+    public class Rootobject
     {
         public int? code
         {
             get; set;
         }
         public string? message
-        {
-            get; set;
-        }
-        public int? ttl
         {
             get; set;
         }
@@ -27,7 +23,7 @@ public record class AccountModel
 
     public class Data
     {
-        public int? mid
+        public long? mid
         {
             get; set;
         }
@@ -48,14 +44,6 @@ public record class AccountModel
             get; set;
         }
         public string? sex
-        {
-            get; set;
-        }
-        public bool nick_free
-        {
-            get; set;
-        }
-        public string? rank
         {
             get; set;
         }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrzBili.Models;
+
+using static OrzBili.Services.BiliApiService;
 
 namespace OrzBili.Contracts.Services;
 
@@ -11,4 +14,6 @@ namespace OrzBili.Contracts.Services;
 /// </summary>
 public interface IBiliApiService
 {
+    public void SetCookie(string cookie);
+    public Task<object> GetInfoAsync(Info info);
 }

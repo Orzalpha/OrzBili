@@ -52,18 +52,18 @@ public partial class App : Application
         ConfigureServices((context, services) =>
         {
             //  Http Client
-            services.AddHttpClient<GetStreamService>(client =>
+            services.AddHttpClient("StreamClient", client =>
             {
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibli.com/");
             });
-            services.AddSingleton<IGetStreamService, GetStreamService>();
-            services.AddHttpClient<BiliApiService>(client =>
+            services.AddHttpClient("ApiClient", client =>
             {
                 client.BaseAddress = new Uri("https://api.bilibili.com/");
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com/");
             });
+
+            services.AddSingleton<IGetStreamService, GetStreamService>();
             services.AddSingleton<IBiliApiService, BiliApiService>();
-            //services.AddSingleton<IGetpgcService, GetpgcService>();
 
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();

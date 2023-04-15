@@ -16,12 +16,13 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
 
     private readonly INavigationService _navigationService;
     private readonly IFileService _fileService;
+    private readonly IBiliApiService _biliApiService;
 
-    public TestViewModel()  
+    public TestViewModel(INavigationService navigationService, IFileService fileService, IBiliApiService biliApiService)  
     {
-        _navigationService = App.GetService<INavigationService>();
-        _fileService = App.GetService<IFileService>();
-        //_getpgcService = App.GetService<IGetpgcService>();
+        _navigationService = navigationService;
+        _fileService = fileService;
+        _biliApiService = biliApiService;
         
     }
 
@@ -42,7 +43,8 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
         //    TestContent += res.ToString() + '\n';
         //}
 
-        _navigationService.NavigateTo(typeof(UserViewModel).FullName!);
+        var account = await _biliApiService.GetAccountInfoAsync();
+        TestContent = account.ToString();
         await Task.CompletedTask;
     }
 
