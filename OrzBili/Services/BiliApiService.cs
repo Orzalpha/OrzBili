@@ -31,10 +31,10 @@ public class BiliApiService : IBiliApiService
     {
         _httpClientFactory = httpClientFactory;
         _httpClient = _httpClientFactory.CreateClient("ApiClient");
-        
+
     }
 
-    public async Task<object> GetInfoAsync(Info info)
+    public async Task<object> GetInfoAsync(Info info, object? parameters)
     {
         object? result = null;
         switch (info)
@@ -46,17 +46,17 @@ public class BiliApiService : IBiliApiService
                 }
             case Info.Space:
                 {
-                    result = await GetSpaceInfoAsync();
+                    result = await GetSpaceInfoAsync(parameters);
                     break;
                 }
             case Info.BangumiList:
                 {
-                    result = await GetBangumiListAsync();
+                    result = await GetBangumiListAsync(parameters);
                     break;
                 }
             case Info.BangumiPlayurl:
                 {
-                    result = await GetBangumiPlayurlAsync();
+                    result = await GetBangumiPlayurlAsync(parameters);
                     break;
                 }
 
@@ -86,51 +86,63 @@ public class BiliApiService : IBiliApiService
         return null!;
     }
 
-    private async Task<SpaceInfoModel.Rootobject> GetSpaceInfoAsync()
+    private async Task<SpaceInfoModel.Rootobject> GetSpaceInfoAsync(object? parameters)
     {
-        try
+        if (parameters is ApiParameterModel.SpacePara para)
         {
-            var space = await _httpClient.GetFromJsonAsync<SpaceInfoModel.Rootobject>("x/member/web/account");
-            return space!;
+            try
+            {
+                var paraString = para.ToKeyValueURL();
+                var result = await _httpClient.GetFromJsonAsync<SpaceInfoModel.Rootobject>("x/space/acc/info?" + paraString);
+                return result;
+
+            }
+            finally { }
         }
-        catch
+        else
         {
-            // TODO: to manage exception
+            throw new Exception("Parameter type wrong!");
         }
 
-        await Task.CompletedTask;
-        return null!;
     }
 
-    private async Task<BangumiListModel.Rootobject> GetBangumiListAsync()
+    private async Task<BangumiListModel.Rootobject> GetBangumiListAsync(object? parameters)
     {
-        try
+        if (parameters is ApiParameterModel.BangumiListPara para)
         {
-            var bangumiList = await _httpClient.GetFromJsonAsync<BangumiListModel.Rootobject>("x/member/web/account");
-            return bangumiList!;
-        }
-        catch
-        {
-            // TODO: to manage exception
-        }
+            try
+            {
+                var paraString = para.ToKeyValueURL();
+                var url = "x/space/bangumi/follow/list?" + paraString;
+                var result = await _httpClient.GetFromJsonAsync<BangumiListModel.Rootobject>(url);
+                return result!;
 
-        await Task.CompletedTask;
-        return null!;
+            }
+            finally { }
+        }
+        else
+        {
+            throw new Exception("Parameter type wrong!");
+        }
     }
 
-    private async Task<BangumiPlayurlModel.Rootobject> GetBangumiPlayurlAsync()
+    private async Task<BangumiPlayurlModel.Rootobject> GetBangumiPlayurlAsync(object? parameters)
     {
-        try
+        if (parameters is ApiParameterModel.BangumiPlayurlPara para)
         {
-            var bangumiPlayurl = await _httpClient.GetFromJsonAsync<BangumiPlayurlModel.Rootobject>("x/member/web/account");
-            return bangumiPlayurl!;
-        }
-        catch
-        {
-            // TODO: to manage exception
-        }
+            try
+            {
+                var paraString = para.ToKeyValueURL();
+                var url = "pgc/player/web/playurl?" + paraString;
+                var result = await _httpClient.GetFromJsonAsync<BangumiPlayurlModel.Rootobject>(url);
+                return result!;
 
-        await Task.CompletedTask;
-        return null!;
+            }
+            finally { }
+        }
+        else
+        {
+            throw new Exception("Parameter type wrong!");
+        }
     }
 }

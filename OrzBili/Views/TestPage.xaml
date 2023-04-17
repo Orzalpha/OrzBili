@@ -1,19 +1,42 @@
-﻿<Page
-    x:Class="OrzBili.Views.TestPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:OrzBili.ViewModels"
-    mc:Ignorable="d">
+﻿<Page x:Class="OrzBili.Views.TestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:viewmodels="using:OrzBili.ViewModels"
+      xmlns:orzCtrler="using:OrzBili.Views"
+      mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <StackPanel>
-            <Button x:Name="TestButton"
-                    Content="Click Me"
-                Command="{x:Bind ViewModel.ButtonCommand}" />
-            <TextBlock Text="{x:Bind ViewModel.TestContent, Mode=OneWay}" />
-        </StackPanel>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Command="{x:Bind ViewModel.ButtonCommand}"
+                Content="OK" />
+        <TextBlock Text="{x:Bind ViewModel.TestContent,Mode=OneWay}" 
+                   Grid.Row="1"/>
+
+        <GridView x:Name="TestGridview"
+                  ItemsSource="{x:Bind ViewModel.Items}"
+                  Grid.Row="1">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:gridviewItem">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{x:Bind Source}"
+                               Margin="{StaticResource XSmallLeftTopRightBottomMargin}"
+                               Height="200"
+                               Width="150" />
+                        <TextBlock Text="Something here"
+                                   Style="{StaticResource BodyTextStyle}"
+                                   FontSize="{StaticResource ContentControlFontSize}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+
+
+        </GridView>
+
+
     </Grid>
 </Page>

@@ -21,7 +21,7 @@ namespace OrzBili.ViewModels;
 public partial class LoginViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
-    private Uri _source = new("https://passport.bilibili.com/ajax/miniLogin/minilogin");
+    private Uri _source = new("https://www.bilibili.com/");
     private bool _isLoading = true;
     private bool _hasFailures;
 
@@ -78,10 +78,10 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
     {
         try
         {
-            var cookie = await WebViewService.GetBiliCookieAsync("https://www.bilibili.com/");
+            var (cookie, token) = await WebViewService.GetBiliCookieAsync("https://www.bilibili.com/");
             
             _biliapiService.SetCookie(cookie);
-            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account) as AccountModel.Rootobject;
+            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account, null) as AccountModel.Rootobject;
             if (account!.code == 0)
             {
                 var mid = account.data!.mid;
@@ -92,9 +92,11 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
                 lock (_biliGlobalRecord)
                 {
                     _biliGlobalRecord.Mid = mid;
+                    _biliGlobalRecord.CsrfToken = token;
                 }
                 var storageInfo = new UserStorageInfoModel((long)mid, cookie);
                 _fileService.Save<UserStorageInfoModel>(ApplicationData.Current.LocalFolder.Path, "StoredInfo.json", storageInfo);
+                _navigationService.NavigateTo(typeof(UserViewModel).FullName!, account);
             }
             else
             {
@@ -105,6 +107,7 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
         catch (Exception ex)
         {
             //  之后设置一个 Flyout 报错
+            return;
         }
 
         await Task.CompletedTask;

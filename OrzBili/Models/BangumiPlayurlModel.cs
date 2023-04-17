@@ -8,18 +8,11 @@ public record class BangumiPlayurlModel
 
     public class Rootobject
     {
-        public int? code
-        {
-            get; set;
-        }
-        public string? message
-        {
-            get; set;
-        }
-        public Result? result
-        {
-            get; set;
-        }
+        public int? code { get; set; } = default;
+
+        public string? message { get; set; } = default;
+
+        public Result? result { get; set; } = default;
     }
 
     public class Result
@@ -28,70 +21,19 @@ public record class BangumiPlayurlModel
         {
             get; set;
         }
-        public int? code
-        {
-            get; set;
-        }
-        public string? seek_param
-        {
-            get; set;
-        }
-        public int? is_preview
-        {
-            get; set;
-        }
-        public int? fnval
-        {
-            get; set;
-        }
-        public bool video_project
-        {
-            get; set;
-        }
-        public int? fnver
-        {
-            get; set;
-        }
+
         public string? type
         {
             get; set;
         }
-        public int? bp
-        {
-            get; set;
-        }
-        public string? result
-        {
-            get; set;
-        }
-        public string? seek_type
-        {
-            get; set;
-        }
-        public int? vip_type
-        {
-            get; set;
-        }
-        public string? from
-        {
-            get; set;
-        }
+
+
+
         public int? video_codecid
         {
             get; set;
         }
-        public Record_Info? record_info
-        {
-            get; set;
-        }
-        public bool is_drm
-        {
-            get; set;
-        }
-        public int? no_rexcode
-        {
-            get; set;
-        }
+
         public string? format
         {
             get; set;
@@ -100,10 +42,7 @@ public record class BangumiPlayurlModel
         {
             get; set;
         }
-        public string? message
-        {
-            get; set;
-        }
+
         public int[]? accept_quality
         {
             get; set;
@@ -116,43 +55,18 @@ public record class BangumiPlayurlModel
         {
             get; set;
         }
-        public bool has_paid
-        {
-            get; set;
-        }
-        public int? vip_status
-        {
-            get; set;
-        }
+
         public Dash? dash
         {
             get; set;
         }
-        public Clip_Info_List[]? clip_info_list
-        {
-            get; set;
-        }
+
         public string[]? accept_description
-        {
-            get; set;
-        }
-        public int? status
         {
             get; set;
         }
     }
 
-    public class Record_Info
-    {
-        public string? record_icon
-        {
-            get; set;
-        }
-        public string? record
-        {
-            get; set;
-        }
-    }
 
     public class Dash
     {

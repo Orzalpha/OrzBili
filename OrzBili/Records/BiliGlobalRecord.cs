@@ -9,7 +9,9 @@ using OrzBili.Models;
 namespace OrzBili.Records;
 public class BiliGlobalRecord : IBiliGlobalRecord
 {
-    public long? Mid { get; set; } = null;
+    public long? Mid { get; set; } = default;
+
+    public string? CsrfToken { get; set; } = default;
 
 
 }

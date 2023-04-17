@@ -32,5 +32,5 @@ public interface IWebViewService
 
     void UnregisterEvents();
 
-    public Task<string> GetBiliCookieAsync(string domain);
+    public Task<(string, string)> GetBiliCookieAsync(string domain);
 }

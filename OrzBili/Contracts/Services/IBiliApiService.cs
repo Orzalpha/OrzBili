@@ -15,5 +15,5 @@ namespace OrzBili.Contracts.Services;
 public interface IBiliApiService
 {
     public void SetCookie(string cookie);
-    public Task<object> GetInfoAsync(Info info);
+    public Task<object> GetInfoAsync(Info info, object? parameters);
 }

@@ -13,4 +13,10 @@ public interface IBiliGlobalRecord
         set;
     }
 
+    public string? CsrfToken
+    {
+        get;
+        set;
+    }
+
 }

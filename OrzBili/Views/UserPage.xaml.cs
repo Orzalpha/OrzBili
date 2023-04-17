@@ -17,8 +17,4 @@ public sealed partial class UserPage : Page
         InitializeComponent();
     }
 
-    private void TestButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        TestTextBlock.Text = Environment.CurrentDirectory;
-    }
 }

@@ -42,7 +42,7 @@ public class WebViewService : IWebViewService
     /// 用于获取 cookie，获取不到时会抛出一个异常
     /// </summary>
     /// <returns></returns>
-    public async Task<string> GetBiliCookieAsync(string domain)
+    public async Task<(string, string)> GetBiliCookieAsync(string domain)
     {
         var cookies = await _webView!.CoreWebView2.CookieManager.GetCookiesAsync(domain);
         if (cookies == null)
@@ -52,11 +52,13 @@ public class WebViewService : IWebViewService
         else
         {
             var result = string.Empty;
+            var token = string.Empty;
             foreach (var cookie in cookies)
             {
                 result += cookie.Name + '=' + cookie.Value + ';';
+                if (cookie.Name == "bili_jct") token = cookie.Value;
             }
-            return result;
+            return (result, token);
         } 
     }
 
