@@ -27,8 +27,6 @@ public record class BangumiPlayurlModel
             get; set;
         }
 
-
-
         public int? video_codecid
         {
             get; set;
@@ -367,30 +365,6 @@ public record class BangumiPlayurlModel
             get; set;
         }
         public string? new_description
-        {
-            get; set;
-        }
-    }
-
-    public class Clip_Info_List
-    {
-        public int? materialNo
-        {
-            get; set;
-        }
-        public int? start
-        {
-            get; set;
-        }
-        public int? end
-        {
-            get; set;
-        }
-        public string? toastText
-        {
-            get; set;
-        }
-        public string? clipType
         {
             get; set;
         }

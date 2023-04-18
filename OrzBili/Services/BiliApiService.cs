@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Documents;
 using OrzBili.Contracts.Services;
 using OrzBili.Models;
+using OrzBili.Models.ApiModels;
 
 namespace OrzBili.Services;
 
@@ -19,6 +21,7 @@ public class BiliApiService : IBiliApiService
         Account,
         Space,
         BangumiList,
+        BangumiDetail,
         BangumiPlayurl
     };
 
@@ -52,6 +55,11 @@ public class BiliApiService : IBiliApiService
             case Info.BangumiList:
                 {
                     result = await GetBangumiListAsync(parameters);
+                    break;
+                }
+            case Info.BangumiDetail:
+                {
+                    result = await GetBangumiDetailAsync(parameters);
                     break;
                 }
             case Info.BangumiPlayurl:
@@ -115,6 +123,26 @@ public class BiliApiService : IBiliApiService
                 var paraString = para.ToKeyValueURL();
                 var url = "x/space/bangumi/follow/list?" + paraString;
                 var result = await _httpClient.GetFromJsonAsync<BangumiListModel.Rootobject>(url);
+                return result!;
+
+            }
+            finally { }
+        }
+        else
+        {
+            throw new Exception("Parameter type wrong!");
+        }
+    }
+
+    private async Task<BangumiDetialModel.Rootobject> GetBangumiDetailAsync(object? parameters)
+    {
+        if (parameters is ApiParameterModel.BangumiDetailPara para)
+        {
+            try
+            {
+                var paraString = para.ToKeyValueURL();
+                var url = "pgc/view/web/season?" + paraString;
+                var result = await _httpClient.GetFromJsonAsync<BangumiDetialModel.Rootobject>(url);
                 return result!;
 
             }

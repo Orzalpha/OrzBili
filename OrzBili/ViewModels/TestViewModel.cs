@@ -5,6 +5,8 @@ using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
 using OrzBili.Core.Contracts.Services;
 using OrzBili.Models;
+using OrzBili.Models.ApiModels;
+using OrzBili.Services;
 using Windows.Storage;
 
 namespace OrzBili.ViewModels;
@@ -47,8 +49,8 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
     {
         //TestContent = "updated!";
         //Items.Add(new gridviewItem { Source = "http://i0.hdslb.com/bfs/bangumi/image/20ee5a611f71b848d2136aa93ad8fbf5d1b2b23a.png" });
-        var paras = new ApiParameterModel.BangumiPlayurlPara(9698756, null, 16224328, null);
-        var result = await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiPlayurl, paras) as BangumiPlayurlModel.Rootobject;
+        var paras = new ApiParameterModel.BangumiDetailPara(5997, null);
+        var result = await _biliApiService.GetInfoAsync(BiliApiService.Info.BangumiDetail, paras) as BangumiDetialModel.Rootobject;
         TestContent = result!.code!.ToString()!;
         await Task.CompletedTask;
         return;
