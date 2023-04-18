@@ -3,12 +3,28 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:model="using:OrzBili.ApiModels.BangumiListModell"
       mc:Ignorable="d">
 
 
     <Grid x:Name="ContentArea">
-
-        
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="LoadMore" />
+        <GridView ItemsSource="{x:Bind ViewModel.BangumiListItems}"
+                  Grid.Row="1"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="model:BangumiListItem">
+                    <StackPanel>
+                        <Image Height="400"
+                               Width="300"
+                               Source="{x:Bind cover}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

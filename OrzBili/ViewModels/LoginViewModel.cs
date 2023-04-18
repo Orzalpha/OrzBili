@@ -10,7 +10,9 @@ using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
 using OrzBili.Core.Contracts.Services;
 using OrzBili.Models;
+using OrzBili.ApiModels;
 using Windows.Storage;
+using OrzBili.ApiModels.AccountModel;
 
 namespace OrzBili.ViewModels;
 
@@ -81,7 +83,7 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
             var (cookie, token) = await WebViewService.GetBiliCookieAsync("https://www.bilibili.com/");
             
             _biliapiService.SetCookie(cookie);
-            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account, null) as AccountModel.Rootobject;
+            var account = await _biliapiService.GetInfoAsync(Services.BiliApiService.Info.Account, null) as Account;
             if (account!.code == 0)
             {
                 var mid = account.data!.mid;
@@ -104,7 +106,7 @@ public partial class LoginViewModel : ObservableRecipient, INavigationAware
                 return;
             } 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //  之后设置一个 Flyout 报错
             return;

@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Documents;
 using OrzBili.Contracts.Services;
 using OrzBili.Models;
-using OrzBili.Models.ApiModels;
+using OrzBili.ApiModels;
+using OrzBili.ApiModels.AccountModel;
+using OrzBili.ApiModels.SpaceInfoModel;
+using OrzBili.ApiModels.BangumiListModell;
+using OrzBili.Models.BangumiDetailModel;
+using OrzBili.ApiModels.BangumiPlayurlModel;
 
 namespace OrzBili.Services;
 
@@ -78,11 +83,11 @@ public class BiliApiService : IBiliApiService
         return result;
     }
 
-    private async Task<AccountModel.Rootobject> GetAccountInfoAsync()
+    private async Task<Account> GetAccountInfoAsync()
     {
         try
         {
-            var account = await _httpClient.GetFromJsonAsync<AccountModel.Rootobject>("x/member/web/account");
+            var account = await _httpClient.GetFromJsonAsync<Account>("x/member/web/account");
             return account!;
         }
         catch
@@ -94,15 +99,15 @@ public class BiliApiService : IBiliApiService
         return null!;
     }
 
-    private async Task<SpaceInfoModel.Rootobject> GetSpaceInfoAsync(object? parameters)
+    private async Task<SpaceInfo> GetSpaceInfoAsync(object? parameters)
     {
         if (parameters is ApiParameterModel.SpacePara para)
         {
             try
             {
                 var paraString = para.ToKeyValueURL();
-                var result = await _httpClient.GetFromJsonAsync<SpaceInfoModel.Rootobject>("x/space/acc/info?" + paraString);
-                return result;
+                var result = await _httpClient.GetFromJsonAsync<SpaceInfo>("x/space/acc/info?" + paraString);
+                return result!;
 
             }
             finally { }
@@ -114,7 +119,7 @@ public class BiliApiService : IBiliApiService
 
     }
 
-    private async Task<BangumiListModel.Rootobject> GetBangumiListAsync(object? parameters)
+    private async Task<BangumiList> GetBangumiListAsync(object? parameters)
     {
         if (parameters is ApiParameterModel.BangumiListPara para)
         {
@@ -122,7 +127,7 @@ public class BiliApiService : IBiliApiService
             {
                 var paraString = para.ToKeyValueURL();
                 var url = "x/space/bangumi/follow/list?" + paraString;
-                var result = await _httpClient.GetFromJsonAsync<BangumiListModel.Rootobject>(url);
+                var result = await _httpClient.GetFromJsonAsync<BangumiList>(url);
                 return result!;
 
             }
@@ -134,7 +139,7 @@ public class BiliApiService : IBiliApiService
         }
     }
 
-    private async Task<BangumiDetialModel.Rootobject> GetBangumiDetailAsync(object? parameters)
+    private async Task<BangumiDetail> GetBangumiDetailAsync(object? parameters)
     {
         if (parameters is ApiParameterModel.BangumiDetailPara para)
         {
@@ -142,7 +147,7 @@ public class BiliApiService : IBiliApiService
             {
                 var paraString = para.ToKeyValueURL();
                 var url = "pgc/view/web/season?" + paraString;
-                var result = await _httpClient.GetFromJsonAsync<BangumiDetialModel.Rootobject>(url);
+                var result = await _httpClient.GetFromJsonAsync<BangumiDetail>(url);
                 return result!;
 
             }
@@ -154,7 +159,7 @@ public class BiliApiService : IBiliApiService
         }
     }
 
-    private async Task<BangumiPlayurlModel.Rootobject> GetBangumiPlayurlAsync(object? parameters)
+    private async Task<BangumiPlayurl> GetBangumiPlayurlAsync(object? parameters)
     {
         if (parameters is ApiParameterModel.BangumiPlayurlPara para)
         {
@@ -162,7 +167,7 @@ public class BiliApiService : IBiliApiService
             {
                 var paraString = para.ToKeyValueURL();
                 var url = "pgc/player/web/playurl?" + paraString;
-                var result = await _httpClient.GetFromJsonAsync<BangumiPlayurlModel.Rootobject>(url);
+                var result = await _httpClient.GetFromJsonAsync<BangumiPlayurl>(url);
                 return result!;
 
             }
