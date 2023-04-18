@@ -12,15 +12,19 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Content="LoadMore" />
-        <GridView ItemsSource="{x:Bind ViewModel.BangumiListItems}"
+        <Button Content="LoadMore"
+                Command="{x:Bind ViewModel.LoadMoreCommand}" />
+        <GridView x:Name="BangumiListGridview"
+            ItemsSource="{x:Bind ViewModel.BangumiListItems}"
                   Grid.Row="1"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+                  SelectionChanged="GridView_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:BangumiListItem">
-                    <StackPanel>
-                        <Image Height="400"
-                               Width="300"
+                    <StackPanel PointerEntered="StackPanel_PointerEntered"
+                                PointerExited="StackPanel_PointerExited"
+                                Padding="10,10,10,10">
+                        <Image Height="200"
+                               Width="150"
                                Source="{x:Bind cover}" />
                     </StackPanel>
                 </DataTemplate>

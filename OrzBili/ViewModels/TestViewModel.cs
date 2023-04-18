@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
 using OrzBili.Core.Contracts.Services;
@@ -29,7 +30,7 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
         _fileService = fileService;
         _biliApiService = biliApiService;
 
-        
+
     }
 
     public ObservableCollection<gridviewItem> Items = new();
@@ -54,6 +55,14 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
         //TestContent = result!.code!.ToString()!;
         await Task.CompletedTask;
         return;
+    }
+
+    public void ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is IEnumerable<gridviewItem> selectItems)
+        {
+            var item = selectItems.FirstOrDefault();
+        }
     }
 
 }

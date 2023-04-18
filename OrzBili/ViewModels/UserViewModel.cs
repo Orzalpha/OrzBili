@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using OrzBili.ApiModels.BangumiListModell;
 using OrzBili.Contracts.Records;
 using OrzBili.Contracts.Services;
@@ -10,14 +11,15 @@ using Windows.Storage;
 
 namespace OrzBili.ViewModels;
 
-public class UserViewModel : ObservableRecipient, INavigationAware
+public partial class UserViewModel : ObservableRecipient, INavigationAware
 {
-    private long Mid { get; set; } = -1;
+    private long mid { get; set; } = -1;
+    private int total { get; set; } = 0;
+    private int nowPage { get; set; } = 1;
+    private readonly object nowPageLock = new();
+    public int totalPage => (total + 29) / 30;
 
-    public ObservableCollection<BangumiListItem> BangumiListItems
-    {
-        get; set;
-    } = new();
+    public ObservableCollection<BangumiListItem> BangumiListItems { get; set; } = new();
 
     private readonly INavigationService _navigationService;
     private readonly IBiliApiService _biliApiService;
@@ -34,7 +36,37 @@ public class UserViewModel : ObservableRecipient, INavigationAware
         _biliGlobalRecord = biliGlobalRecord;
     }
 
+    [RelayCommand]
+    public async void LoadMore()
+    {
+        lock (nowPageLock)
+        {
+            if (nowPage >= totalPage)
+            {
+                return;
+            }
+            nowPage++;
+        }
+        var para = new ApiParameterModel.BangumiListPara(mid, 1);
+        para.pn = nowPage;
+        if (await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiList, para) is BangumiList result)
+        {
+            if (result.data != null && result.data.list != null)
+            {
+                foreach (var item in result.data.list)
+                {
+                    BangumiListItems.Add(item);
+                }
+            }
+        }
+        return;
+    }
 
+    public void JumptoPlay(int season_id, int media_id)
+    {
+        var para = new NavigateParaModel.PlayerpagePara(season_id, media_id);
+        _navigationService.NavigateTo(typeof(PlayerViewModel).FullName!, para);
+    }
 
     public void OnNavigatedFrom()
     {
@@ -46,20 +78,24 @@ public class UserViewModel : ObservableRecipient, INavigationAware
         {
             if (_biliGlobalRecord.Mid != null)
             {
-                Mid = (long)_biliGlobalRecord.Mid;
+                mid = (long)_biliGlobalRecord.Mid;
             }
         }
-        if (Mid != -1)
+        if (mid != -1)
         {
-            var para = new ApiParameterModel.BangumiListPara(Mid, 1);
-            if (await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiList, para) is BangumiList result &&
-                result.data != null &&
-                result.data.list != null)
+            var para = new ApiParameterModel.BangumiListPara(mid, 1);
+            if (await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiList, para) is BangumiList result)
             {
-                foreach (var item in result.data.list)
+                if (result.data != null && result.data.list != null)
                 {
-                    BangumiListItems.Add(item);
+                    foreach (var item in result.data.list)
+                    {
+                        BangumiListItems.Add(item);
+                    }
                 }
+                total = (int)(result.data != null && result.data.total != null ? result.data.total : 0);
+
+
             }
             else
             {

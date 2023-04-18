@@ -21,6 +21,11 @@ public sealed partial class TestPage : Page
 
     }
 
-
-
+    private void TestGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (TestGridview.SelectedItem is gridviewItem item)
+        {
+            
+        }
+    }
 }

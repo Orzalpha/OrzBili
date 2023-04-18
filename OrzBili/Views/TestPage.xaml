@@ -19,7 +19,8 @@
 
         <GridView x:Name="TestGridview"
                   ItemsSource="{x:Bind ViewModel.Items}"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  SelectionChanged="TestGridview_SelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:gridviewItem">
                     <StackPanel Orientation="Horizontal">

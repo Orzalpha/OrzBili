@@ -133,4 +133,7 @@
   <data name="Shell_Login.Content" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Shell_Player.Content" xml:space="preserve">
+    <value>Player</value>
+  </data>
 </root>
