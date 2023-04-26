@@ -12,20 +12,21 @@ public sealed partial class TestPage : Page
         get;
     }
 
-
+    
 
     public TestPage()
     {
         ViewModel = App.GetService<TestViewModel>();
+
+        
+
         InitializeComponent();
 
+        ViewModel.TestMediaPlayerElement = TestMediaPlayerElement;
     }
 
     private void TestGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (TestGridview.SelectedItem is gridviewItem item)
-        {
-            
-        }
+
     }
 }

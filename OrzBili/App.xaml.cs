@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 
 using OrzBili.Activation;
@@ -17,7 +17,9 @@ using OrzBili.Services;
 using OrzBili.ViewModels;
 using OrzBili.Views;
 
-using Windows.UI.WebUI;
+
+
+
 
 namespace OrzBili;
 
@@ -83,7 +85,7 @@ public partial class App : Application
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0");
                 client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com/");
                 client.DefaultRequestHeaders.Add("Origin", "https://www.bilibili.com/");
-                
+
             }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
@@ -97,7 +99,7 @@ public partial class App : Application
 
 
             // Other Activation Handlers
-            
+
 
             // Services
             services.AddTransient<IWebViewService, WebViewService>();
@@ -130,6 +132,7 @@ public partial class App : Application
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
         }).
         Build();
+
 
         UnhandledException += App_UnhandledException;
     }

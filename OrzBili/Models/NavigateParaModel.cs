@@ -7,6 +7,20 @@ using System.Threading.Tasks;
 namespace OrzBili.Models;
 public class NavigateParaModel
 {
+    public class UserpagePara
+    {
+        public long mid
+        {
+            get;
+            set;
+        }
+
+        public UserpagePara(long mid)
+        {
+            this.mid = mid;
+        }
+    }
+    
     public class PlayerpagePara
     {
         public int season_id

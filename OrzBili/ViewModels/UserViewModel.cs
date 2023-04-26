@@ -19,6 +19,9 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
     private readonly object nowPageLock = new();
     public int totalPage => (total + 29) / 30;
 
+    [ObservableProperty]
+    public bool isLoading = false;
+
     public ObservableCollection<BangumiListItem> BangumiListItems { get; set; } = new();
 
     private readonly INavigationService _navigationService;
@@ -74,6 +77,7 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
     }
     public async void OnNavigatedTo(object parameter)
     {
+        IsLoading = true;
         lock (_biliGlobalRecord)
         {
             if (_biliGlobalRecord.Mid != null)
@@ -108,6 +112,7 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
             // to set a flyout
             return;
         }
+        IsLoading = false;  
 
     }
 }

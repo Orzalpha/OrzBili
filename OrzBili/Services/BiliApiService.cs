@@ -45,42 +45,42 @@ public class BiliApiService : IBiliApiService
     public async Task<object> GetInfoAsync(Info info, object? parameters)
     {
         object? result = null;
-        switch (info)
+        try
         {
-            case Info.Account:
-                {
-                    result = await GetAccountInfoAsync();
-                    break;
-                }
-            case Info.Space:
-                {
-                    result = await GetSpaceInfoAsync(parameters);
-                    break;
-                }
-            case Info.BangumiList:
-                {
-                    result = await GetBangumiListAsync(parameters);
-                    break;
-                }
-            case Info.BangumiDetail:
-                {
-                    result = await GetBangumiDetailAsync(parameters);
-                    break;
-                }
-            case Info.BangumiPlayurl:
-                {
-                    result = await GetBangumiPlayurlAsync(parameters);
-                    break;
-                }
+            switch (info)
+            {
+                case Info.Account:
+                    {
+                        result = await GetAccountInfoAsync();
+                        break;
+                    }
+                case Info.Space:
+                    {
+                        result = await GetSpaceInfoAsync(parameters);
+                        break;
+                    }
+                case Info.BangumiList:
+                    {
+                        result = await GetBangumiListAsync(parameters);
+                        break;
+                    }
+                case Info.BangumiDetail:
+                    {
+                        result = await GetBangumiDetailAsync(parameters);
+                        break;
+                    }
+                case Info.BangumiPlayurl:
+                    {
+                        result = await GetBangumiPlayurlAsync(parameters);
+                        break;
+                    }
+            }
+        }catch(Exception) { 
 
         }
 
         await Task.CompletedTask;
-        if (result == null)
-        {
-            throw new Exception("BiliService return null!");
-        }
-        return result;
+        return result!;
     }
 
     private async Task<Account> GetAccountInfoAsync()
@@ -148,7 +148,14 @@ public class BiliApiService : IBiliApiService
                 var paraString = para.ToKeyValueURL();
                 var url = "pgc/view/web/season?" + paraString;
                 var result = await _httpClient.GetFromJsonAsync<BangumiDetail>(url);
-                return result!;
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new Exception("Cannot get BangumiDetail!");
+                }
 
             }
             finally { }

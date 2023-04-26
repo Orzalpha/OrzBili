@@ -9,15 +9,26 @@
 
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Button Command="{x:Bind ViewModel.ButtonCommand}"
                 Content="OK" />
-        <TextBlock Text="{x:Bind ViewModel.TestContent,Mode=OneWay}" 
-                   Grid.Row="1"/>
+        <!--<TextBlock Text="{x:Bind ViewModel.TestContent,Mode=OneWay}" 
+                   Grid.Row="1"/>-->
 
-        <GridView x:Name="TestGridview"
+        <MediaPlayerElement x:Name="TestMediaPlayerElement"
+                            Grid.Row="1"
+                            MinWidth="400"
+                            MinHeight="300"
+                            AreTransportControlsEnabled="True">
+
+
+        </MediaPlayerElement>
+
+
+
+        <!--<GridView x:Name="TestGridview"
                   ItemsSource="{x:Bind ViewModel.Items}"
                   Grid.Row="1"
                   SelectionChanged="TestGridview_SelectionChanged">
@@ -36,7 +47,7 @@
             </GridView.ItemTemplate>
 
 
-        </GridView>
+        </GridView>-->
 
 
     </Grid>

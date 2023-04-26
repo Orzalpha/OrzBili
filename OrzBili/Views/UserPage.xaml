@@ -14,6 +14,9 @@
         </Grid.RowDefinitions>
         <Button Content="LoadMore"
                 Command="{x:Bind ViewModel.LoadMoreCommand}" />
+        <ProgressRing Grid.Row="1" 
+                      IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+        
         <GridView x:Name="BangumiListGridview"
             ItemsSource="{x:Bind ViewModel.BangumiListItems}"
                   Grid.Row="1"

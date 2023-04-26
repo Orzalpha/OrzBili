@@ -103,7 +103,7 @@ public class Vip_Info
 
 public class Episode
 {
-    public int? aid { get; set; } = default;
+    public long? aid { get; set; } = default;
 
     public string? bvid { get; set; } = default;
 

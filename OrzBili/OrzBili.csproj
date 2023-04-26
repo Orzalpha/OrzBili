@@ -14,6 +14,12 @@
 	<UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Flyleaf_v3.7.4\**" />
+    <EmbeddedResource Remove="Flyleaf_v3.7.4\**" />
+    <None Remove="Flyleaf_v3.7.4\**" />
+    <Page Remove="Flyleaf_v3.7.4\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
@@ -21,7 +27,6 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-    <PackageReference Include="FFmpeg.AutoGen" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230331000" />
@@ -61,4 +66,12 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PRIResource Remove="Flyleaf_v3.7.4\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="Assets\DashMPDTemplate.xml" />
+  </ItemGroup>
 </Project>
