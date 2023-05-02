@@ -23,7 +23,7 @@ namespace OrzBili.ViewModels;
 public partial class LoginViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
-    private Uri _source = new("https://www.bilibili.com/");
+    private Uri _source = new("https://passport.bilibili.com/ajax/miniLogin/minilogin?t=0");
     private bool _isLoading = true;
     private bool _hasFailures;
 

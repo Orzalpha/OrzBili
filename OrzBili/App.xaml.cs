@@ -74,7 +74,6 @@ public partial class App : Application
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
             });
-            ;
             services.AddHttpClient("ApiClient", client =>
             {
                 client.BaseAddress = new Uri("https://api.bilibili.com/");

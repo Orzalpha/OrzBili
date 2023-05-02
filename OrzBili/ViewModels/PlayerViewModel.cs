@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Navigation;
 using OrzBili.ApiModels.BangumiPlayurlModel;
 using OrzBili.Contracts.Services;
@@ -14,8 +16,11 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
 {
     [ObservableProperty]
     public string testString = string.Empty;
+    [ObservableProperty]
+    public bool infobarVisibility = false;
     public ObservableCollection<Episode> EpisodesItems = new();
     public MediaPlayerElement mediaPlayerElement { get; set; } = null!;
+
 
     private readonly IBiliApiService _biliApiService;
     private readonly IGetStreamService _getStreamService;
@@ -29,7 +34,7 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
     public async void PlayEpisode(Episode episode)
     {
         var para = new ApiParameterModel.BangumiPlayurlPara(episode.aid, episode.bvid, episode.cid, episode.id);
-        if (await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiPlayurl, para) is BangumiPlayurl playurl && playurl.result != null && playurl.result.dash!=null)
+        if (await _biliApiService.GetInfoAsync(Services.BiliApiService.Info.BangumiPlayurl, para) is BangumiPlayurl playurl && playurl.result != null && playurl.result.dash != null)
         {
             var dash = playurl.result.dash;
             var source = await _getStreamService.CreateMediaSource(dash.video![0], dash.audio![0]);
@@ -39,13 +44,14 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
         else
         {
             //  cannot play
+            InfobarVisibility = true;
         }
         return;
     }
 
     public void OnNavigatedFrom()
     {
-        if(mediaPlayerElement != null)
+        if (mediaPlayerElement != null && mediaPlayerElement.MediaPlayer != null)
         {
             mediaPlayerElement.MediaPlayer.Dispose();
         }

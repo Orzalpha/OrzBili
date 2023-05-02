@@ -11,11 +11,13 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        
+        <InfoBar Message="没法播放，暂时不能显示原因，以后或许会有的"
+                 Severity="Warning"
+                 IsOpen="{x:Bind ViewModel.InfobarVisibility, Mode=TwoWay}"/>
         <TextBlock Text="{x:Bind ViewModel.TestString, Mode=OneWay}" />
         <MediaPlayerElement x:Name="PlayerElement"
                             AreTransportControlsEnabled="True">
-            
+
         </MediaPlayerElement>
         <ListView x:Name="EpisodeListview"
                   Grid.Column="1"
@@ -24,12 +26,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="api:Episode">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind title}" 
-                                 Margin="{StaticResource XSmallLeftTopRightBottomMargin}"/>
-                        <TextBlock Text="{x:Bind long_title}" 
-                                   Margin="{StaticResource XSmallLeftTopRightBottomMargin}"/>
+                        <TextBlock Text="{x:Bind title}"
+                                   Margin="{StaticResource XSmallLeftTopRightBottomMargin}" />
+                        <TextBlock Text="{x:Bind long_title}"
+                                   Margin="{StaticResource XSmallLeftTopRightBottomMargin}" />
                     </StackPanel>
-                    
+
                 </DataTemplate>
             </ListView.ItemTemplate>
 

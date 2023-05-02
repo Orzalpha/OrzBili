@@ -22,7 +22,7 @@ public sealed partial class TestPage : Page
 
         InitializeComponent();
 
-        ViewModel.TestMediaPlayerElement = TestMediaPlayerElement;
+        //ViewModel.TestMediaPlayerElement = TestMediaPlayerElement;
     }
 
     private void TestGridview_SelectionChanged(object sender, SelectionChangedEventArgs e)

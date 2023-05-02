@@ -158,12 +158,16 @@ public class BiliApiService : IBiliApiService
                 }
 
             }
+            catch(Exception ex) { 
+                Console.WriteLine(ex.Message);
+            }
             finally { }
         }
         else
         {
             throw new Exception("Parameter type wrong!");
         }
+        return null!;
     }
 
     private async Task<BangumiPlayurl> GetBangumiPlayurlAsync(object? parameters)

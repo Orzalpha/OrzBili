@@ -6,6 +6,7 @@ using OrzBili.Contracts.Records;
 using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
 using OrzBili.Core.Contracts.Services;
+using OrzBili.Core.Services;
 using OrzBili.Models;
 using Windows.Storage;
 
@@ -21,22 +22,28 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
 
     [ObservableProperty]
     public bool isLoading = false;
+    [ObservableProperty]
+    public bool infobarVisibility = false;
 
     public ObservableCollection<BangumiListItem> BangumiListItems { get; set; } = new();
 
     private readonly INavigationService _navigationService;
     private readonly IBiliApiService _biliApiService;
     private readonly IBiliGlobalRecord _biliGlobalRecord;
+    private readonly IFileService _fileService;
 
 
     public UserViewModel(
         INavigationService navigationService,
         IBiliApiService biliApiService,
-        IBiliGlobalRecord biliGlobalRecord)
+        IBiliGlobalRecord biliGlobalRecord,
+        IFileService fileService
+        )
     {
         _navigationService = navigationService;
         _biliApiService = biliApiService;
         _biliGlobalRecord = biliGlobalRecord;
+        _fileService = fileService;
     }
 
     [RelayCommand]
@@ -63,6 +70,13 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
             }
         }
         return;
+    }
+
+    [RelayCommand]
+    public void Logout()
+    {
+        _fileService.Delete(ApplicationData.Current.LocalFolder.Path, "StoredInfo.json");
+        InfobarVisibility = true;
     }
 
     public void JumptoPlay(int season_id, int media_id)
@@ -112,7 +126,7 @@ public partial class UserViewModel : ObservableRecipient, INavigationAware
             // to set a flyout
             return;
         }
-        IsLoading = false;  
+        IsLoading = false;
 
     }
 }

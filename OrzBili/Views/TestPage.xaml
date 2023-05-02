@@ -17,15 +17,20 @@
         <!--<TextBlock Text="{x:Bind ViewModel.TestContent,Mode=OneWay}" 
                    Grid.Row="1"/>-->
 
-        <MediaPlayerElement x:Name="TestMediaPlayerElement"
+        <!--<MediaPlayerElement x:Name="TestMediaPlayerElement"
                             Grid.Row="1"
                             MinWidth="400"
                             MinHeight="300"
                             AreTransportControlsEnabled="True">
 
 
-        </MediaPlayerElement>
-
+        </MediaPlayerElement>-->
+        <InfoBar x:Name="TestInfobar"
+                 Message="Something Wrong!"
+                 Severity="Warning" 
+                 IsOpen="{x:Bind ViewModel.InfobarVisibility, Mode=OneWay}"
+                 VerticalAlignment="Bottom"
+                 Margin="{StaticResource InfoBarActionVerticalOrientationMargin}"/>
 
 
         <!--<GridView x:Name="TestGridview"

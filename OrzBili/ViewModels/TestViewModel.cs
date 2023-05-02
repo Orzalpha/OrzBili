@@ -24,6 +24,9 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty]
     public string testContent = "something";
 
+    [ObservableProperty]
+    public bool infobarVisibility = false;
+
     public MediaPlayerElement TestMediaPlayerElement
     {
         get;
@@ -79,6 +82,7 @@ public partial class TestViewModel : ObservableRecipient, INavigationAware
 
         };
         */
+        InfobarVisibility = true;
         await Task.CompletedTask;
         return;
     }

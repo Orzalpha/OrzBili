@@ -92,7 +92,7 @@ public class Progress
 
 public class Vip_Info
 {
-    public int? due_date { get; set; } = default;
+    public long? due_date { get; set; } = default;
 
     public int? status { get; set; } = default;
 
