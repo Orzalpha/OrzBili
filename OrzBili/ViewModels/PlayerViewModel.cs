@@ -22,8 +22,7 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
     public bool infobarVisibility = false;
     public ObservableCollection<Episode> EpisodesItems = new();
     public MediaPlayerElement AnimeElement { get; set; } = null!;
-    public MediaPlayer AnimePlayer { get; } = new();
-
+    public MediaPlayer AnimePlayer { get; set; } = new();
 
     private readonly IBiliApiService _biliApiService;
     private readonly IGetStreamService _getStreamService;
@@ -41,8 +40,19 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
         {
             var dash = playurl.result.dash;
             var source = await _getStreamService.CreateMediaSource(dash.video![0], dash.audio![0]);
-            AnimePlayer.Source = source;
-            AnimePlayer.Play();
+            if (AnimePlayer != null)
+            {
+                lock (AnimePlayer)
+                {
+                    if (AnimePlayer != null)
+                    {
+                        AnimePlayer.Source = source;
+                        AnimePlayer.Play();
+                    }
+                }
+            }
+            
+            
         }
         else
         {
@@ -54,9 +64,9 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-        if (AnimePlayer != null)
+        lock( AnimePlayer)
         {
-            AnimePlayer.Dispose();
+            AnimePlayer.Pause();
         }
     }
     public async void OnNavigatedTo(object parameter)
