@@ -118,8 +118,6 @@ public partial class App : Application
             services.AddTransient<PlayerPage>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<LoginPage>();
-            services.AddTransient<TestViewModel>();
-            services.AddTransient<TestPage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<UserViewModel>();

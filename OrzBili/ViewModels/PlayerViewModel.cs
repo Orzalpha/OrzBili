@@ -9,6 +9,8 @@ using OrzBili.Contracts.Services;
 using OrzBili.Contracts.ViewModels;
 using OrzBili.Models;
 using OrzBili.Models.BangumiDetailModel;
+using Windows.Media.Playback;
+using Windows.UI.Core;
 
 namespace OrzBili.ViewModels;
 
@@ -19,7 +21,8 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty]
     public bool infobarVisibility = false;
     public ObservableCollection<Episode> EpisodesItems = new();
-    public MediaPlayerElement mediaPlayerElement { get; set; } = null!;
+    public MediaPlayerElement AnimeElement { get; set; } = null!;
+    public MediaPlayer AnimePlayer { get; } = new();
 
 
     private readonly IBiliApiService _biliApiService;
@@ -38,8 +41,8 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
         {
             var dash = playurl.result.dash;
             var source = await _getStreamService.CreateMediaSource(dash.video![0], dash.audio![0]);
-            mediaPlayerElement.Source = source;
-            mediaPlayerElement.MediaPlayer.Play();
+            AnimePlayer.Source = source;
+            AnimePlayer.Play();
         }
         else
         {
@@ -51,9 +54,9 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-        if (mediaPlayerElement != null && mediaPlayerElement.MediaPlayer != null)
+        if (AnimePlayer != null)
         {
-            mediaPlayerElement.MediaPlayer.Dispose();
+            AnimePlayer.Dispose();
         }
     }
     public async void OnNavigatedTo(object parameter)
@@ -76,4 +79,5 @@ public partial class PlayerViewModel : ObservableRecipient, INavigationAware
             //  to set visibility
         }
     }
+
 }

@@ -4,21 +4,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:api="using:OrzBili.Models.BangumiDetailModel"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      IsTabStop="True"
+      TabIndex="0">
 
     <Grid x:Name="ContentArea">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <InfoBar Message="没法播放，暂时不能显示原因，以后或许会有的"
+        <InfoBar Message="没法播放，暂时不能显示原因，以后或许会有的（以后也没有了）"
                  Severity="Warning"
-                 IsOpen="{x:Bind ViewModel.InfobarVisibility, Mode=TwoWay}"/>
-        <TextBlock Text="{x:Bind ViewModel.TestString, Mode=OneWay}" />
-        <MediaPlayerElement x:Name="PlayerElement"
-                            AreTransportControlsEnabled="True">
+                 IsOpen="{x:Bind ViewModel.InfobarVisibility, Mode=TwoWay}" />
 
+        <MediaPlayerElement x:Name="AnimePlayerElement"
+                            AreTransportControlsEnabled="True"
+                            >
+            
         </MediaPlayerElement>
+
+
         <ListView x:Name="EpisodeListview"
                   Grid.Column="1"
                   ItemsSource="{x:Bind ViewModel.EpisodesItems,Mode=OneWay}"
